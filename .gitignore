@@ -1,3 +1,4 @@
-
-#.venv/	# pasta do Pycharm
-#venv/
+# Ignorar a pasta do Pycharm (tentei de todas as maenriras pra garantir kkkkkk)
+.venv/	
+venv/
+/venv
