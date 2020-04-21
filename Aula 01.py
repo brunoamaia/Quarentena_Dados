@@ -1,4 +1,5 @@
 import pandas as pd     # Imortar a biblioteca "pandas"
+import math
 import matplotlib.pyplot as plt
 
 ### Importar / Ler os arquivos brutos ###
@@ -59,11 +60,11 @@ print(filmes_com_media.describe())
 
 filmes_sem_nota = filmes_com_media.query('nota.isna()')    # Forma de separar os filmes sem nota
 # filmes_sem_nota = filmes_com_media.query('nota.isnull()', engine='python')  # Forma  que funcionou no colab.research.google
-filmes_s_n = filmes_sem_nota['titulo']          # Podia usar apenas a parte de pois do = no print, mas fiz mais detalhado
+filmes_s_n = filmes_sem_nota['titulo'].values.tolist()        # Transforma a coluna de Titulos em uma lista
 print('\n\n*#*#*#*#  Desafio 1  #*#*#*#*')
 print('Encotrar os filmes que não receberam nenhuma nota')
-print('Filmes sem avaliação')
-print(filmes_s_n)
+print('Filmes sem avaliação: \n')
+print(*filmes_s_n, sep = "\n")              # Imprimir cada valor em uma linha
 
 
 ###         Desafio 2         ###
@@ -73,7 +74,7 @@ print(filmes_s_n)
 filmes_com_media.rename(columns={'nota':'media'}, inplace=True)         # Modifcar do nome "A" para o "B"
 print('\n\n*#*#*#*#  Desafio 2  #*#*#*#*')
 print('Renomear a coluna "nota", para "media"')
-print('Tabela com o nome da coluna modificada')
+print('Tabela com o nome da coluna modificada: \n')
 print(filmes_com_media)
 filmes_com_media.head(5)
 # filmes_com_media.columns = ['filmeId', 'media']
@@ -82,16 +83,25 @@ filmes_com_media.head(5)
 
 ###         Desafio 3         ###
 # Colocar a quantidade de avaliações que cada filme recebeu
-
 print('\n\n*#*#*#*#  Desafio 3  #*#*#*#*')
 print('Colocar a quantidade de avaliações que cada filme recebeu')
 print('Tabela com a quantidade de avaliações recebidas')
 
+
 ###         Desafio 4         ###
 # Arredondar as casas decimais das médias
+filmes_com_media['media'] = filmes_com_media['media'].round(decimals=2)
+print('\n\n*#*#*#*#  Desafio 4  #*#*#*#*')
+print('Arredondar para duas casas decimais as médias')
+print('Tabela com os valores arredondados: ')
+print(filmes_com_media)
+
 
 ###         Desafio 5         ###
 # Verificar quantos são os gêneros únicos e quais são (esse aqui o bixo pega kkk)
+generos = filmes['genero']  # Pega a coluna de Generos
+# .unique()         # Verifica os generos unicos
+#print(generos_unicos)
 
 ###         Desafio 6         ###
 # Quantas vezes aparece cada gênero
