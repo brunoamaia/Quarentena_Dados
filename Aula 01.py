@@ -90,7 +90,7 @@ filmes_com_media.head(5)
 contar_votos = pd.DataFrame({'filmeId':avaliacoes['filmeId']})     # Criar DataFrame com os filmeId
 contar_votos['votos'] = contar_votos                              # Duplicar apra manter a "chave" (filmeId). Pois erá utilizada para linkar com a tabela de nomes
 contar_votos = contar_votos.groupby('filmeId')['votos'].count()   # Contar quantas vezes apareceu cada Id (como ficou com 3 colunas, a 1ª mostra o Id do filme)
-contar_votos = filmes.join(contar_votos, on='filmeId')     # Insere a coluna de filmes (nome dos filmes), na tabela de cotar votos
+contar_votos = filmes.join(contar_votos, on='filmeId')     # Insere a coluna de filmes (nome dos filmes), na tabela de contar votos
 contar_votos = contar_votos.drop('filmeId', 1)                             # Remover uma coluna ('nome', eixo: 0 para linhas (x) ou 1 para colunas (y))
 print('\n\n*#*#*#*#  Desafio 3  #*#*#*#*')
 print('Colocar a quantidade de avaliações que cada filme recebeu.')
@@ -100,7 +100,7 @@ print(contar_votos)
 
 ###         Desafio 4         ###
 # Arredondar as casas decimais das médias
-filmes_com_media['media'] = filmes_com_media['media'].round(decimals=2)
+filmes_com_media['media'] = filmes_com_media['media'].round(2)
 print('\n\n*#*#*#*#  Desafio 4  #*#*#*#*')
 print('Arredondar para duas casas decimais as médias.')
 print('Tabela com os valores arredondados: ')
