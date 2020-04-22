@@ -1,8 +1,6 @@
 import matplotlib.pyplot as plt
 import pandas as pd     # Imortar a biblioteca "pandas"
 
-import math
-
 
 ### Importar / Ler os arquivos brutos ###
 filmes = pd.read_csv("B:\Programação\Quarentena_Dados\dados\movies.csv")    # Existem outros read: read_pdf, read_xls, ...
@@ -13,10 +11,11 @@ avaliacoes = pd.read_csv('B:\Programação\Quarentena_Dados\dados\Ratings.csv')
 filmes.columns = ['filmeId', 'titulo', 'genero']                    # renomeia as colunas (no caso,     traduzimos elas)
 avaliacoes.columns = ['usuarioId', 'filmeId', 'nota', 'momento']
 
-print('Tabelas Importadas: \nFilmes:')
-print(filmes)
-print('\n\nAvaliações:')
-print(avaliacoes)
+# print('Tabelas Importadas: \nFilmes:')
+# print(filmes)
+# print('\n\nAvaliações:')
+# print(avaliacoes)
+
 #filmes.head()   # Mostra as primeiras  colunas dos dados importados (só funciona no Notebook)
 #print('\n\n Lista com o nome dos Filmes')
 #print(filmes)
@@ -136,6 +135,8 @@ print(*generos_unicos, sep = "\n")              # Imprimir cada valor em uma lin
 # generos_quantidade, dum = filmes(data, 'genres', genre_labels)
 contar_generos = filmes['genero'].str.get_dummies('|').sum()              # Usando o método direto
                 # .str habilita as ferramentas de String. .get_dumies('*'), separa no caracter '*', cada item separado se torna uma nova coluna. .sum faz o somatório, neste caso somou os valores das colunas
+                #  O comando cria uma série. Existe apenas uma coluna (quantidade), mas cada valor possui um indice (genero)
+contar_generos =  contar_generos.sort_values(ascending=False)     # ordenar pelo valor (so tem na coluna de quantidade) de forma decrescente
     # método mais trabalhoso
 # contar_generos = pd.DataFrame(generos, columns=['genero'])      # Importar o Dataframe remodeado com os generos
 # contar_generos['contador'] = contar_generos['genero']           # Duplicar coluna para fazer a contagem
@@ -156,9 +157,11 @@ print('Criar um gráfico para o "Desafio 6". Pode ser de barra')
 # print('Tabela com os valores arredondados: ')
 # print()
 contar_generos.describe()
+plt.interactive(False)
 
-plt('contar_generos')
-pause = input('digite a')
+# contar_generos.plot(kind='pie', title='Porcentagem dos generos nos filmes analisados') # Gráfico de pizza
+contar_generos.plot(kind='bar', title='Filmes por genero') # Gráfico de barras
+plt.show()
 
 
 
