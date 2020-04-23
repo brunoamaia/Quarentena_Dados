@@ -14,8 +14,10 @@
 <p>Durante as aulas, foram utilizados os seguintes bancos de dados:</p>
 
 <ul>
-    <li>MovieLens - utilizado nas aulas 1 e 2 (disponívelm em:  <a href="https://grouplens.org/datasets/movielens''       /">grouplens.org</a>) 
-    <li>IMDB 5000 - utilizado na aula 3 (disponívelm em:  <a href="https://www.kaggle.com/carolzhangdc/imdb-5000-movie-  dataset">kaggle.com</a>)
+    <li>MovieLens - utilizado nas aulas <a href=https://colab.research.google.com/drive/1Uww_9N-OPJI6_tc9dVSHN73T1uLFwBHb">01</a>
+      e 02 (disponívelm em:  <a href="https://grouplens.org/datasets/movielens''       /">grouplens.org</a>) 
+    <li>IMDB 5000 - utilizado na aula 
+      <a href="https://colab.research.google.com/drive/1sHysTa71kNHwAwbjJkMqKIn0I1FikB1C#scrollTo=HNPXHZ8NeCLA">03</a> (disponívelm em:  <a href="https://www.kaggle.com/carolzhangdc/imdb-5000-movie-  dataset">kaggle.com</a>)
 </ul>
 
 <p>Obs.: os Notebooks das aulas serão criados posteriormente, pois estou fazendo pelo <a href="https://www.jetbrains.com/pycharm/">PyCharm</a>  e o <a href="https://www.anaconda.com/distribution/">Anaconda</a></p>
