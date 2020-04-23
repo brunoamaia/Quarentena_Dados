@@ -17,7 +17,12 @@ a = 1
 
 # Pegar a coluna das cores      #### REfazer esta parte
 color_or_bw = imdb.query("color in ['Color', ' Black and White']")  # Criar nova tabela para estudar a importância/relação de filmes coloridos/PeB (remove os demais)
-#color_or_bw['color_0_ou_1'] = (color_or_bw['color']=='Color')*1   # Tentativa de Criar uma coluna que torna a variável Preto/Branco em binária
+color_or_bw = color_or_bw.dropna().query('budget > 0  |  gross > 0')     # Remove as linhas sem dados (dropna()) e as linhas com dados
+color_or_bw['color_0_ou_1'] = (color_or_bw['color']=='Color')*1   # Tentativa de Criar uma coluna que torna a variável Preto/Branco em binária
+sns.scatterplot(data=color_or_bw, x="color_0_ou_1", y="gross")
+plot.show()
+print('\n\nDataframe organizado por filmes coloridos Ou preto e branco')
+print(color_or_bw["color_0_ou_1"].value_counts())
 # color_or_bw['color_0_ou_1'] = color_or_bw['color'] == 'Color'     # Outra forma de fazer, mas não etá aceitando
 # df["b"] = df["value"] == 3                                    # Exemplo
 # print(f'\n\n Tamanho da variável: {len(color_or_bw)}')
@@ -73,7 +78,7 @@ lucro_ano = imdb_usa[['title_year', 'lucro']]
 ## Desafio 4
 # Confirmar que o diretor que faz muitos filmes e não da lucro é o Woody Allen
 filmes_por_diretor = imdb_usa['director_name'].value_counts()               # conta filmes por diretor
-gross_director = imdb_usa[['director_name', 'gross']].set_index('director_name').join(filmes_por_diretor, on='director_name')   # Insere a coluna com os dados de quantos filmes foram feitos por aquele diretor
+gross_director = imdb_usa[['director_name', 'gross']].set_index('director_name').join(filmes_por_diretor, on='director_name')   # Insere a coluna com os dados de quantos filmes foram feitos por aquele diretor. O set_index adiciona um "sub titulo/rotulo" pois não podem ter 2 colunas com o mesmo nome
 gross_director.columns=['dindim','filmes_irmaos']   #renomear
 gross_director = gross_director.reset_index()
 sns.scatterplot(x='filmes_irmaos', y='dindim', data=gross_director)
