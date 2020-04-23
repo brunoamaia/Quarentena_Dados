@@ -23,7 +23,7 @@ n = len(generos_de_filmes)
 #   aesthetics,       (estilo do gráfico, grid, ...
 
     # Ajuste das configurações do gráfico
-sns.set_style("whitegrid")          # Colocar grid horizontal em todos os gráficos
+sns.set_style("whitegrid")          # Colocar grid em todos os gráficos
 plt.figure(figsize=(18,8))          # Tamanho do gráfico
 sns.barplot(x = generos_de_filmes.index,        # ".index" Pega os indices
             y = generos_de_filmes.values,       # ".values" Pega os valores
