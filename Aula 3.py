@@ -12,10 +12,10 @@ print(imdb['color'].value_counts(normalize=True))   # Normalizar os valores
 a = 1
 
 # Pegar a coluna das cores
-color_or_bw = imdb.query("color in ['Color', ' Black and White']")  # Criar nova tabela para estudar a importância/relação de filmes coloridos/PeB
-# color_or_bw['color_0_ou_1'] = (color_or_bw['color']=='Color')*1
-color_or_bw['color_0_ou_1'] = color_or_bw['color'] == 'Color'
-# df["b"] = df["value"] == 3
+color_or_bw = imdb.query("color in ['Color', ' Black and White']")  # Criar nova tabela para estudar a importância/relação de filmes coloridos/PeB (remove os demais)
+# color_or_bw['color_0_ou_1'] = (color_or_bw['color']=='Color')*1   # Tentativa de Criar uma coluna que torna a variável Preto/Branco em binária
+# color_or_bw['color_0_ou_1'] = color_or_bw['color'] == 'Color'     # Outra forma de fazer, mas não etá aceitando
+# df["b"] = df["value"] == 3                                    # Exemplo
 # print(f'\n\n Tamanho da variável: {len(color_or_bw)}')
 
 
