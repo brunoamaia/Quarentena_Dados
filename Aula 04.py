@@ -36,11 +36,12 @@ f, ax = plot.subplots(figsize=(11, 9))
 sns.heatmap(corr)
 plot.show()
 
-notas1 = notas[['cienc_humanas', 'linguagem_codigo','redacao']]
-notas_teste = notas1.replace(0,'')
-notas_teste = notas_teste.dropna()
-# sns.pairplot(notas_teste)
-sns.pairplot(notas_teste, kind='reg')
+notas1 = notas[['cienc_humanas', 'linguagem_codigo','redacao']]     # Reduzir colunas para rodar mais rápido
+# notas_teste = notas1.replace(0,'')
+# notas_teste = notas_teste.dropna()
+notas_teste = notas1
+sns.pairplot(notas_teste)
+# sns.pairplot(notas_teste, kind='reg')       #Poltar com linha de regressão linear
 # sns.set(style="ticks", color_codes=True)
 # sns.pairplot(notas_teste, hue='species')     #plotar "pareamento" junto com uma reta de regressão
 plot.show()
