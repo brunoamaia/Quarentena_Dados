@@ -49,7 +49,7 @@ print('Criação e treino da inteligencia artificial (IA)')
 a = time.process_time()
 # modelo = SVR()        # Cria um modelo Não Linear     (é muito "pesado")
 print('Modelo - Linear SVR')
-modelo_svrl = LinearSVR(max_iter=50000)    #   Máquina de Vetores de suporte (SVM, do inglês: support vector machine)
+modelo_svrl = LinearSVR(max_iter=1000)    #   Máquina de Vetores de suporte (SVM, do inglês: support vector machine)
 modelo_svrl = modelo_svrl.fit(x_treino, y_treino)               # .fit - Realiza o treino (forma de aprender as regras, ou tentar)
 predicoes_svrl = modelo_svrl.predict(x_teste) # .predict - Saida dos valores estimados pela IA
 # plot.figure(figsize=(10,10))
@@ -58,6 +58,15 @@ predicoes_svrl = modelo_svrl.predict(x_teste) # .predict - Saida dos valores est
 #print(modelo_svr)
 qualidade_svrl = mean_squared_error(y_teste, predicoes_svrl)
 del modelo_svrl, predicoes_svrl
+print(f'Tempo gasto: {time.process_time()- a} s')
+
+print('Modelo - SVR')           # Muito Pesado
+a = time.process_time()
+modelo_svr = SVR()
+modelo_svr = modelo_svr.fit(x_treino, y_treino)
+predicoes_svr = modelo_svr.predict(x_teste)
+qualidade_svr = mean_squared_error(y_teste, predicoes_svr)
+del modelo_svr, predicoes_svr
 print(f'Tempo gasto: {time.process_time()- a} s')
 
 print('Modelo - Ávore de Decisão')
@@ -111,7 +120,7 @@ a = time.process_time()
 modelo_svr = SVR()
 modelo_svr = modelo_svr.fit(x_treino, y_treino)
 predicoes_svr = modelo_svr.predict(x_teste)
-qualidade_svr = mean_squared_error(y_teste, predicoes_svr)
+qualidade_svr1 = mean_squared_error(y_teste, predicoes_svr)
 del modelo_svr, predicoes_svr
 print(f'Tempo gasto: {time.process_time()- a} s')
 
@@ -155,7 +164,8 @@ print(f'Tempo gasto: {time.process_time()- a} s')
 ### Avaliação dos métodos
 print('Avaliação de desempenho dos métodos:')
 # print(f"Método 1: Pontuação = {avaliacao_metodo:.2f}; Raiz = {math.sqrt(avaliacao_metodo):.2f}")
-print(f'SRV1: \t\tPontuação = {qualidade_svr:.2f}, Raiz = {math.sqrt(qualidade_svr):.2f}')
+print(f'SRV0: \t\tPontuação = {qualidade_svr:.2f}, Raiz = {math.sqrt(qualidade_svr):.2f}')
+print(f'SRV1: \t\tPontuação = {qualidade_svr1:.2f}, Raiz = {math.sqrt(qualidade_svr1):.2f}')
 print(f'lin. SRV0: \tPontuação = {qualidade_svrl:.2f}, Raiz = {math.sqrt(qualidade_svrl):.2f}')
 print(f'lin. SRV1: \tPontuação = {qualidade_svrl1:.2f}, Raiz = {math.sqrt(qualidade_svrl1):.2f}')
 print(f'DT0: \t\tPontuação = {qualidade_dt:.2f}, Raiz = {math.sqrt(qualidade_dt):.2f}')
