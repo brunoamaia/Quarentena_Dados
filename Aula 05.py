@@ -4,6 +4,9 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plot
 import math
+import timeit
+
+start = timeit.timeit()
 
 # Formatação geral para apresentar os dados com 2 casas decimais
 pd.options.display.float_format = '{:,.2f}'.format
@@ -45,13 +48,16 @@ print(f'Dados para teste (x e y): x = {x_teste.shape} e y = {y_teste.shape}')
 print('Criação e treino da inteligencia artificial (IA)')
 # modelo = SVR()        # Cria um modelo Não Linear     (é muito "pesado")
 print('Modelo - Linear SVR')
-modelo_svr = LinearSVR()    #   Máquina de Vetores de suporte (SVM, do inglês: support vector machine)
-modelo_svr = modelo_svr.fit(x_treino, y_treino)               # .fit - Realiza o treino (forma de aprender as regras, ou tentar)
-predicoes_svr = modelo_svr.predict(x_teste) # .predict - Saida dos valores estimados pela IA
+modelo_svrl = LinearSVR()    #   Máquina de Vetores de suporte (SVM, do inglês: support vector machine)
+modelo_svrl = modelo_svrl.fit(x_treino, y_treino)               # .fit - Realiza o treino (forma de aprender as regras, ou tentar)
+predicoes_svrl = modelo_svrl.predict(x_teste) # .predict - Saida dos valores estimados pela IA
 # plot.figure(figsize=(10,10))
 # sns.scatterplot(x=y_teste, y=(predicoes_svr - y_teste))  # plotar diferença entre o projetado e o real
 # plot.show()
 #print(modelo_svr)
+qualidade_svrl = mean_squared_error(y_teste, predicoes_svrl)
+del modelo_svrl, predicoes_svrl
+print(timeit.timeit())
 
 print('Modelo - Ávore de Decisão')
 modelo_dt = DecisionTreeRegressor()        # Avore de decisão (é bem rápido)
@@ -61,6 +67,9 @@ predicoes_dt = modelo_dt.predict(x_teste)  # Saida dos valores estimados pela IA
 # sns.scatterplot(x=y_teste, y=(predicoes_dt - y_teste))  # plotar diferença entre o projetado e o real
 # plot.show()
 #print(modelo_dt)
+qualidade_dt = mean_squared_error(y_teste, predicoes_dt)
+del modelo_dt, predicoes_dt
+print(timeit.timeit())
 
 print('Modelo - Falso (média)')
 modelo_falso = DummyRegressor()     # Teste utilizando média (falsa IA)
@@ -70,19 +79,82 @@ predicoes_falsas = modelo_falso.predict(x_teste)
 # sns.scatterplot(x = y_teste, y = (predicoes_falsas - y_teste))       # Erro da previsão utilizando apenas a média dos dados do "treino"
 # plot.show()
 #print(modelo_falso)
+qualidade_falso = mean_squared_error(y_teste, predicoes_falsas)
+del modelo_falso, predicoes_falsas
+print(timeit.timeit())
+
+######          Apagar as variáves para poder refazer o teste       ########
+del x, y, x_treino, y_treino, x_teste, y_teste
+
+# Remover as notas abaxido de 100
+f = 100 # filto do valor mínimo
+notas_uteis = notas[ (notas.linguagem_codigo > f) &         # Fazer em Apenas um comando
+                     (notas.cienc_humanas > f) &
+                     (notas.cienc_naturais > f) &
+                     (notas.matematica > f) &
+                     (notas.redacao > f)      ]
+
+x = notas_uteis[['cienc_naturais', 'cienc_humanas', 'matematica', 'redacao']]
+y = notas_uteis['linguagem_codigo']
+x_treino, x_teste, y_treino, y_teste = train_test_split(x, y, random_state=326784)      # Separa a amostra em elementos de treino e de teste
+
+# Criar o modelo de inteligencia artificial
+print('Modelo - SVR')           # Muito Pesado
+modelo_svr = SVR()
+modelo_svr = modelo_svr.fit(x_treino, y_treino)
+predicoes_svr = modelo_svr.predict(x_teste)
+qualidade_svr = mean_squared_error(y_teste, predicoes_svr)
+del modelo_svr, predicoes_svr
+print(timeit.timeit())
+
+print('Modelo - Linear SVR')
+modelo_svrl = LinearSVR()
+modelo_svrl = modelo_svrl.fit(x_treino, y_treino)
+predicoes_svrl = modelo_svrl.predict(x_teste)
+qualidade_svrl1 = mean_squared_error(y_teste, predicoes_svrl)
+del modelo_svrl, predicoes_svrl
+print(timeit.timeit())
+
+print('Modelo - Ávore de Decisão')
+modelo_dt = DecisionTreeRegressor()
+modelo_dt = modelo_dt.fit(x_treino, y_treino)
+predicoes_dt = modelo_dt.predict(x_teste)
+qualidade_dt1 = mean_squared_error(y_teste, predicoes_dt)
+del modelo_dt, predicoes_dt
+print(timeit.timeit())
+
+print('Modelo - Falso (média)')
+modelo_falso = DummyRegressor(strategy="mean")     # Teste utilizando média (falsa IA)
+modelo_falso = modelo_falso.fit(x_treino, y_treino)
+predicoes_falsas = modelo_falso.predict(x_teste)
+qualidade_falso1 = mean_squared_error(y_teste, predicoes_falsas)
+del modelo_falso, predicoes_falsas
+print(timeit.timeit())
+
+print('Modelo - Falso (mediana)')
+modelo_falso = DummyRegressor(strategy="median")     # Teste utilizando média (falsa IA)
+modelo_falso = modelo_falso.fit(x_treino, y_treino)
+predicoes_falsas = modelo_falso.predict(x_teste)
+qualidade_falso1 = mean_squared_error(y_teste, predicoes_falsas)
+del modelo_falso, predicoes_falsas
+print(timeit.timeit())
 
 # Qualidade do teste        # Seria o "erro quadrático"
-print('Qualidade dos modelos utilizando o Erro Quadrático Médio.')
-qualidade_svr = mean_squared_error(y_teste, predicoes_svr)
-qualidade_dt = mean_squared_error(y_teste, predicoes_dt)
-qualidade_falsas = mean_squared_error(y_teste, predicoes_falsas)
-
 ### Avaliação dos métodos
 print('Avaliação de desempenho dos métodos:')
 # print(f"Método 1: Pontuação = {avaliacao_metodo:.2f}; Raiz = {math.sqrt(avaliacao_metodo):.2f}")
-print(f'SRV: \tPontuação = {qualidade_svr:.2f}, Raiz = {math.sqrt(qualidade_svr):.2f}')
-print(f'DT: \tPontuação = {qualidade_dt:.2f}, Raiz = {math.sqrt(qualidade_dt):.2f}')
-print(f'Falso: \tPontuação = {qualidade_falsas:.2f}, Raiz = {math.sqrt(qualidade_falsas):.2f}')
+print(f'SRV1: \tPontuação = {qualidade_svr:.2f}, Raiz = {math.sqrt(qualidade_svr):.2f}')
+print(f'lSRV0: \tPontuação = {qualidade_svrl:.2f}, Raiz = {math.sqrt(qualidade_svrl):.2f}')
+print(f'lSRV1: \tPontuação = {qualidade_svrl1:.2f}, Raiz = {math.sqrt(qualidade_svrl1):.2f}')
+print(f'DT0: \tPontuação = {qualidade_dt:.2f}, Raiz = {math.sqrt(qualidade_dt):.2f}')
+print(f'DT1: \tPontuação = {qualidade_dt1:.2f}, Raiz = {math.sqrt(qualidade_dt1):.2f}')
+print(f'Falso0: \tPontuação = {qualidade_falso:.2f}, Raiz = {math.sqrt(qualidade_falso):.2f}')
+print(f'Falso1: \tPontuação = {qualidade_falso1:.2f}, Raiz = {math.sqrt(qualidade_falso1):.2f}')
+print(f'Falso1: \tPontuação = {qualidade_falso1:.2f}, Raiz = {math.sqrt(qualidade_falso1):.2f}')
+
+
+
+
 
 
 ### Gráficos Adicionais
