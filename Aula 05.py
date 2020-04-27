@@ -3,7 +3,10 @@
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plot
+import math
 
+# Formatação geral para apresentar os dados com 2 casas decimais
+pd.options.display.float_format = '{:,.2f}'.format
 sns.set_style("whitegrid")
 
 #   Bibliotecas para machine learning       # procurar SQLearning
@@ -63,17 +66,32 @@ print("%.2f" % mean_squared_error(y_teste, predicoes_falsas))    # Tamanho do er
 
 
 plot.figure(figsize=(10,10))
-sns.scatterplot(x=y_teste, y=(predicoe_notas_limguagem - y_teste))  # plotar diferença entre o projetado e o real
-plot.show()
+# sns.scatterplot(x=y_teste, y=(predicoe_notas_limguagem - y_teste))  # plotar diferença entre o projetado e o real
+# plot.show()
 
 # Algoritmo do Paulo kkkkkk
-sns.scatterplot(x = y_teste, y = (y_treino.mean() - y_teste))       # Erro da previsão utilizando apenas a média dos dados do "treino"
-plot.show()
+# sns.scatterplot(x = y_teste, y = (y_treino.mean() - y_teste))       # Erro da previsão utilizando apenas a média dos dados do "treino"
+# plot.show()
 
 # plotar/confrontar os resulados de um eixo com a previsão \o/
-sns.scatterplot(x=x_teste['matematica'].values, y=predicoe_notas_limguagem)     # Previsões     (fundo)
-sns.scatterplot(x=x_teste['matematica'].values, y=y_teste)                      # Valores Reais (parte de cima)
-plot.show()
+# sns.scatterplot(x=x_teste['matematica'].values, y=predicoe_notas_limguagem)     # Previsões     (fundo)
+# sns.scatterplot(x=x_teste['matematica'].values, y=y_teste)                      # Valores Reais (parte de cima)
+# plot.show()
+
+
+# Vamos utilizar uma métrica para nos dizer como nosso modelo está indo
+# Utilizaremos o Erro Quadrático Médio.
+# Existem centenas de métricas de avaliação, tudo vai depender do que você precisa e o que você está prevendo.
+
+
+### Avaliação dos métodos
+avaliacao_metodo = mean_squared_error(y_teste, predicoe_notas_limguagem)
+avaliacao_dummy = mean_squared_error(y_teste, predicoes_falsas)
+print('Avaliação de desempenho dos métodos:')
+print(f"Método 1: Pontuação - % .2f{avaliacao_metodo}; Raiz - {math.sqrt(avaliacao_metodo)}")
+print(f"Média: Pontuação - {avaliacao_dummy}; Raiz - {math.sqrt(avaliacao_dummy)}")
+
+
 
 
 ## Desafio 1 da Tais Spadini
