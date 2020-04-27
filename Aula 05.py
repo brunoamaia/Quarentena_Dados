@@ -36,43 +36,56 @@ y = notas['linguagem_codigo']
 #  Treino da inteligencia
 # Ele seleciona alguns elementos para "ensinar" e outros para "testar" a qualidade do teste
 x_treino, x_teste, y_treino, y_teste = train_test_split(x, y, random_state=326784)      # Separa a amostra em elementos de treino e de teste
-print('Grupos de treino (x e y)')                                                       # random_state é outra forma de fixar a escolha de termos aleatorios
-print(x_treino.shape)                                                                   # não é muito eficiente, pois um método pode chamar outro que utilizam random, e este não seguira este padrão ...
-print(y_treino.shape)
-print('Grupos de teste (x e y)')
-print(x_teste.shape)
-print(y_teste.shape)
+print(f'Dados para treino (x e y): x = {x_treino.shape} e y = {y_treino.shape}')                                                       # random_state é outra forma de fixar a escolha de termos aleatorios
+#print(x_treino.shape)                                                                   # não é muito eficiente, pois um método pode chamar outro que utilizam random, e este não seguira este padrão ...
+print(f'Dados para teste (x e y): x = {x_teste.shape} e y = {y_teste.shape}')
+
 
 # Criar o modelo de inteligencia artificial
 print('Criação e treino da inteligencia artificial (IA)')
-# modelo = LinearSVR()    #Cria um modelo Linear
 # modelo = SVR()        # Cria um modelo Não Linear     (é muito "pesado")
-modelo = DecisionTreeRegressor()        # Avore de decisão (é bem rápido)
-modelo = modelo.fit(x_treino, y_treino)  # .fit realiza o treino (forma de aprender as regras, ou tentar)
-#print(modelo)
-predicoe_notas_limguagem = modelo.predict(x_teste)  # Saida dos valores estimados pela IA
-print('Tamanho da saida da IA treinada')
-print(predicoe_notas_limguagem.shape)
+print('Modelo - Linear SVR')
+modelo_svr = LinearSVR()    #   Máquina de Vetores de suporte (SVM, do inglês: support vector machine)
+modelo_svr = modelo_svr.fit(x_treino, y_treino)               # .fit - Realiza o treino (forma de aprender as regras, ou tentar)
+predicoes_svr = modelo_svr.predict(x_teste) # .predict - Saida dos valores estimados pela IA
+# plot.figure(figsize=(10,10))
+# sns.scatterplot(x=y_teste, y=(predicoes_svr - y_teste))  # plotar diferença entre o projetado e o real
+# plot.show()
+#print(modelo_svr)
 
-# Qualidade do teste        # Seria o "erro quadrático"
-print('Qualidade do teste, utilizando o modelo criado')
-print("%.2f" %mean_squared_error(y_teste, predicoe_notas_limguagem))    # Tamanho do erro
+print('Modelo - Ávore de Decisão')
+modelo_dt = DecisionTreeRegressor()        # Avore de decisão (é bem rápido)
+modelo_dt = modelo_dt.fit(x_treino, y_treino)
+predicoes_dt = modelo_dt.predict(x_teste)  # Saida dos valores estimados pela IA
+# plot.figure(figsize=(10,10))
+# sns.scatterplot(x=y_teste, y=(predicoes_dt - y_teste))  # plotar diferença entre o projetado e o real
+# plot.show()
+#print(modelo_dt)
 
+print('Modelo - Falso (média)')
 modelo_falso = DummyRegressor()     # Teste utilizando média (falsa IA)
 modelo_falso = modelo_falso.fit(x_treino, y_treino)
 predicoes_falsas = modelo_falso.predict(x_teste)
-print('Qualidade do teste, utilizando o modelo "falso" (média)')
-print("%.2f" % mean_squared_error(y_teste, predicoes_falsas))    # Tamanho do erro
-
-
-plot.figure(figsize=(10,10))
-# sns.scatterplot(x=y_teste, y=(predicoe_notas_limguagem - y_teste))  # plotar diferença entre o projetado e o real
+# plot.figure(figsize=(10,10))
+# sns.scatterplot(x = y_teste, y = (predicoes_falsas - y_teste))       # Erro da previsão utilizando apenas a média dos dados do "treino"
 # plot.show()
+#print(modelo_falso)
 
-# Algoritmo do Paulo kkkkkk
-# sns.scatterplot(x = y_teste, y = (y_treino.mean() - y_teste))       # Erro da previsão utilizando apenas a média dos dados do "treino"
-# plot.show()
+# Qualidade do teste        # Seria o "erro quadrático"
+print('Qualidade dos modelos utilizando o Erro Quadrático Médio.')
+qualidade_svr = mean_squared_error(y_teste, predicoes_svr)
+qualidade_dt = mean_squared_error(y_teste, predicoes_dt)
+qualidade_falsas = mean_squared_error(y_teste, predicoes_falsas)
 
+### Avaliação dos métodos
+print('Avaliação de desempenho dos métodos:')
+# print(f"Método 1: Pontuação = {avaliacao_metodo:.2f}; Raiz = {math.sqrt(avaliacao_metodo):.2f}")
+print(f'SRV: \tPontuação = {qualidade_svr:.2f}, Raiz = {math.sqrt(qualidade_svr):.2f}')
+print(f'DT: \tPontuação = {qualidade_dt:.2f}, Raiz = {math.sqrt(qualidade_dt):.2f}')
+print(f'Falso: \tPontuação = {qualidade_falsas:.2f}, Raiz = {math.sqrt(qualidade_falsas):.2f}')
+
+
+### Gráficos Adicionais
 # plotar/confrontar os resulados de um eixo com a previsão \o/
 # sns.scatterplot(x=x_teste['matematica'].values, y=predicoe_notas_limguagem)     # Previsões     (fundo)
 # sns.scatterplot(x=x_teste['matematica'].values, y=y_teste)                      # Valores Reais (parte de cima)
@@ -84,12 +97,7 @@ plot.figure(figsize=(10,10))
 # Existem centenas de métricas de avaliação, tudo vai depender do que você precisa e o que você está prevendo.
 
 
-### Avaliação dos métodos
-avaliacao_metodo = mean_squared_error(y_teste, predicoe_notas_limguagem)
-avaliacao_dummy = mean_squared_error(y_teste, predicoes_falsas)
-print('Avaliação de desempenho dos métodos:')
-print(f"Método 1: Pontuação - % .2f{avaliacao_metodo}; Raiz - {math.sqrt(avaliacao_metodo)}")
-print(f"Média: Pontuação - {avaliacao_dummy}; Raiz - {math.sqrt(avaliacao_dummy)}")
+
 
 
 
