@@ -13,6 +13,7 @@ from sklearn.dummy import DummyRegressor                # Modelo que retorna a m
 from sklearn.svm import LinearSVR                       # Uma forma de inteligencia artificial para regressão Lienar
 from sklearn.svm import SVR                             # Forma mais robusta e pesada das bilbiotecas usadas (não é necessariamente a melhor)
 from sklearn.tree import DecisionTreeRegressor          # Arvore de Decisão, forma mais rápida de treinar uma IA
+from sklearn.svm import NuSVR                           # Novo método pra testar
 
 # Formatações Gerais
 pd.options.display.float_format = '{:,.2f}'.format  # 2 casas decimais
@@ -48,6 +49,18 @@ y_teste = dados_teste[coluna_label].to_numpy()
 
 ################################            Treino da inteligencia              ################################
 resultados  = {}    # Criar um Dicionário para armazenar a qualidade dos testes
+
+
+print('\nModelo - NuSVR')                     # NuSVR
+a = time.process_time()
+modelo_svr = NuSVR()
+modelo_svr = modelo_svr.fit(x_treino, y_treino)
+predicoes_svr = modelo_svr.predict(x_teste)
+qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
+del modelo_svr, predicoes_svr
+resultados['NuSVR: \t\t']=qualidade_svr0
+print(f'Tempo gasto: {time.process_time()- a} s')
+
 
 print('\nModelo - SVR')                     # SVR - Sigmoid
 a = time.process_time()
