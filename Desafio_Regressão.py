@@ -46,6 +46,8 @@ y_teste = dados_teste[coluna_label].to_numpy()
 
 
 ################################            Treino da inteligencia              ################################
+resultados  = {}    # Criar um Dicionário para armazenar a qualidade dos testes
+
 print('\nModelo - Linear SVR')              # Linear SVR
 a = time.process_time()
 modelo_svrl = LinearSVR(max_iter=1000)
@@ -53,16 +55,18 @@ modelo_svrl = modelo_svrl.fit(x_treino, y_treino)
 predicoes_svrl = modelo_svrl.predict(x_teste)
 qualidade_svrl0 = mean_squared_error(y_teste, predicoes_svrl)
 del modelo_svrl, predicoes_svrl
+resultados['lin. SVR0: \t']=qualidade_svrl0
 print(f'Tempo gasto: {time.process_time()- a} s')
 
-print('\nModelo - SVR')                     # SVR
-a = time.process_time()
-modelo_svr = SVR()
-modelo_svr = modelo_svr.fit(x_treino, y_treino)
-predicoes_svr = modelo_svr.predict(x_teste)
-qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
-del modelo_svr, predicoes_svr
-print(f'Tempo gasto: {time.process_time()- a} s')
+# print('\nModelo - SVR')                     # SVR
+# a = time.process_time()
+# modelo_svr = SVR()
+# modelo_svr = modelo_svr.fit(x_treino, y_treino)
+# predicoes_svr = modelo_svr.predict(x_teste)
+# qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
+# del modelo_svr, predicoes_svr
+# resultados['SVR0: \t\t']=qualidade_svr0
+# print(f'Tempo gasto: {time.process_time()- a} s')
 
 print('\nModelo - Ávore de Decisão')          # Ávore de Decisão
 a = time.process_time()
@@ -71,6 +75,7 @@ modelo_dt = modelo_dt.fit(x_treino, y_treino)
 predicoes_dt = modelo_dt.predict(x_teste)
 qualidade_dt0 = mean_squared_error(y_teste, predicoes_dt)
 del modelo_dt, predicoes_dt
+resultados['DT0: \t\t']=qualidade_dt0
 print(f'Tempo gasto: {time.process_time()- a} s')
 
 print('\nModelo - Falso (média)')             # Média
@@ -80,6 +85,7 @@ modelo_falso = modelo_falso.fit(x_treino, y_treino)
 predicoes_falsas = modelo_falso.predict(x_teste)
 qualidade_media0 = mean_squared_error(y_teste, predicoes_falsas)
 del modelo_falso, predicoes_falsas
+resultados['Media0: \t']=qualidade_media0
 print(f'Tempo gasto: {time.process_time()- a} s')
 
 print('\nModelo - Falso (mediana)')           # Mediana
@@ -89,9 +95,8 @@ modelo_falso = modelo_falso.fit(x_treino, y_treino)
 predicoes_falsas = modelo_falso.predict(x_teste)
 qualidade_mediana0 = mean_squared_error(y_teste, predicoes_falsas)
 del modelo_falso, predicoes_falsas
+resultados['Mediana0: \t']=qualidade_mediana0
 print(f'Tempo gasto: {time.process_time()- a} s')
-
-
 
 
 
@@ -163,26 +168,8 @@ print(f'Tempo gasto: {time.process_time()- a} s')
 # print(f'Tempo gasto: {time.process_time()- a} s')
 #
 
-#
-#
-#
-#
-#
-#
-#Qualidade do teste        # Seria o "erro quadrático"
-print('Avaliação de desempenho dos métodos:')
 
-print(f'lin. SRV0: \tPontuação = {qualidade_svrl0:.2f}, Raiz = {math.sqrt(qualidade_svrl0):.2f}')
-print(f'SRVR0: \t\tPontuação = {qualidade_svr0:.2f}, Raiz = {math.sqrt(qualidade_svr0):.2f}')
-print(f'DT0: \t\tPontuação = {qualidade_dt0:.2f}, Raiz = {math.sqrt(qualidade_dt0):.2f}')
-print(f'Media0: \tPontuação = {qualidade_media0:.2f}, Raiz = {math.sqrt(qualidade_media0):.2f}')
-print(f'Mediana0: \tPontuação = {qualidade_mediana0:.2f}, Raiz = {math.sqrt(qualidade_mediana0):.2f}')
-
-
-
-
-# print(f'lin. SRV0: \tPontuação = {qualidade_svrl1:.2f}, Raiz = {math.sqrt(qualidade_svrl1):.2f}')
-# print(f'SVR0: \t\tPontuação = {qualidade_svr1:.2f}, Raiz = {math.sqrt(qualidade_svr1):.2f}')
-# print(f'DT0: \t\tPontuação = {qualidade_dt1:.2f}, Raiz = {math.sqrt(qualidade_dt1):.2f}')
-# print(f'Media0: \tPontuação = {qualidade_media1:.2f}, Raiz = {math.sqrt(qualidade_media1):.2f}')
-# print(f'Mediana0: \tPontuação = {qualidade_mediana1:.2f}, Raiz = {math.sqrt(qualidade_mediana1):.2f}')
+# Nova forma de imprimir os resultados
+print('\nAvaliação de desempenho (usando todos os dados):')
+for k, v in resultados.items():
+    print(f'{k} \tPontuação = {v:.2f}, Raiz = {math.sqrt(v):.2f}')
