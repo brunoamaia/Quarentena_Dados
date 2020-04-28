@@ -47,6 +47,7 @@ y_teste = dados_teste[coluna_label].to_numpy()
 
 ################################            Treino da inteligencia              ################################
 print('\nModelo - Linear SVR')              # Linear SVR
+a = time.process_time()
 modelo_svrl = LinearSVR(max_iter=1000)
 modelo_svrl = modelo_svrl.fit(x_treino, y_treino)
 predicoes_svrl = modelo_svrl.predict(x_teste)
@@ -63,7 +64,7 @@ qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
 del modelo_svr, predicoes_svr
 print(f'Tempo gasto: {time.process_time()- a} s')
 
-print('Modelo - Ávore de Decisão')          # Ávore de Decisão
+print('\nModelo - Ávore de Decisão')          # Ávore de Decisão
 a = time.process_time()
 modelo_dt = DecisionTreeRegressor()
 modelo_dt = modelo_dt.fit(x_treino, y_treino)
@@ -72,7 +73,7 @@ qualidade_dt0 = mean_squared_error(y_teste, predicoes_dt)
 del modelo_dt, predicoes_dt
 print(f'Tempo gasto: {time.process_time()- a} s')
 
-print('Modelo - Falso (média)')             # Média
+print('\nModelo - Falso (média)')             # Média
 a = time.process_time()
 modelo_falso = DummyRegressor()
 modelo_falso = modelo_falso.fit(x_treino, y_treino)
@@ -81,7 +82,7 @@ qualidade_media0 = mean_squared_error(y_teste, predicoes_falsas)
 del modelo_falso, predicoes_falsas
 print(f'Tempo gasto: {time.process_time()- a} s')
 
-print('Modelo - Falso (mediana)')           # Mediana
+print('\nModelo - Falso (mediana)')           # Mediana
 a = time.process_time()
 modelo_falso = DummyRegressor(strategy="median")
 modelo_falso = modelo_falso.fit(x_treino, y_treino)
@@ -121,7 +122,7 @@ print(f'Tempo gasto: {time.process_time()- a} s')
 # modelo_svrl = LinearSVR(max_iter=1000)
 # modelo_svrl = modelo_svrl.fit(x_treino, y_treino)
 # predicoes_svrl = modelo_svrl.predict(x_teste)
-# qualidade_svrl0 = mean_squared_error(y_teste, predicoes_svrl)
+# qualidade_svrl1 = mean_squared_error(y_teste, predicoes_svrl)
 # del modelo_svrl, predicoes_svrl
 # print(f'Tempo gasto: {time.process_time()- a} s')
 #
@@ -130,7 +131,7 @@ print(f'Tempo gasto: {time.process_time()- a} s')
 # modelo_svr = SVR()
 # modelo_svr = modelo_svr.fit(x_treino, y_treino)
 # predicoes_svr = modelo_svr.predict(x_teste)
-# qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
+# qualidade_svr1 = mean_squared_error(y_teste, predicoes_svr)
 # del modelo_svr, predicoes_svr
 # print(f'Tempo gasto: {time.process_time()- a} s')
 #
@@ -139,7 +140,7 @@ print(f'Tempo gasto: {time.process_time()- a} s')
 # modelo_dt = DecisionTreeRegressor()
 # modelo_dt = modelo_dt.fit(x_treino, y_treino)
 # predicoes_dt = modelo_dt.predict(x_teste)
-# qualidade_dt0 = mean_squared_error(y_teste, predicoes_dt)
+# qualidade_dt1 = mean_squared_error(y_teste, predicoes_dt)
 # del modelo_dt, predicoes_dt
 # print(f'Tempo gasto: {time.process_time()- a} s')
 #
@@ -148,7 +149,7 @@ print(f'Tempo gasto: {time.process_time()- a} s')
 # modelo_falso = DummyRegressor()
 # modelo_falso = modelo_falso.fit(x_treino, y_treino)
 # predicoes_falsas = modelo_falso.predict(x_teste)
-# qualidade_media0 = mean_squared_error(y_teste, predicoes_falsas)
+# qualidade_media1 = mean_squared_error(y_teste, predicoes_falsas)
 # del modelo_falso, predicoes_falsas
 # print(f'Tempo gasto: {time.process_time()- a} s')
 #
@@ -157,20 +158,22 @@ print(f'Tempo gasto: {time.process_time()- a} s')
 # modelo_falso = DummyRegressor(strategy="median")
 # modelo_falso = modelo_falso.fit(x_treino, y_treino)
 # predicoes_falsas = modelo_falso.predict(x_teste)
-# qualidade_mediana0 = mean_squared_error(y_teste, predicoes_falsas)
+# qualidade_mediana1 = mean_squared_error(y_teste, predicoes_falsas)
 # del modelo_falso, predicoes_falsas
 # print(f'Tempo gasto: {time.process_time()- a} s')
 #
+
 #
 #
 #
 #
 #
-# Qualidade do teste        # Seria o "erro quadrático"
+#
+#Qualidade do teste        # Seria o "erro quadrático"
 print('Avaliação de desempenho dos métodos:')
 
 print(f'lin. SRV0: \tPontuação = {qualidade_svrl0:.2f}, Raiz = {math.sqrt(qualidade_svrl0):.2f}')
-print(f'SRV0: \t\tPontuação = {qualidade_svr0:.2f}, Raiz = {math.sqrt(qualidade_svr0):.2f}')
+print(f'SRVR0: \t\tPontuação = {qualidade_svr0:.2f}, Raiz = {math.sqrt(qualidade_svr0):.2f}')
 print(f'DT0: \t\tPontuação = {qualidade_dt0:.2f}, Raiz = {math.sqrt(qualidade_dt0):.2f}')
 print(f'Media0: \tPontuação = {qualidade_media0:.2f}, Raiz = {math.sqrt(qualidade_media0):.2f}')
 print(f'Mediana0: \tPontuação = {qualidade_mediana0:.2f}, Raiz = {math.sqrt(qualidade_mediana0):.2f}')
@@ -178,14 +181,8 @@ print(f'Mediana0: \tPontuação = {qualidade_mediana0:.2f}, Raiz = {math.sqrt(qu
 
 
 
-# print(f'SRV1: \t\tPontuação = {qualidade_svr1:.2f}, Raiz = {math.sqrt(qualidade_svr1):.2f}')
-#
-# print(f'lin. SRV1: \tPontuação = {qualidade_svrl1:.2f}, Raiz = {math.sqrt(qualidade_svrl1):.2f}')
-#
-# print(f'DT1: \t\tPontuação = {qualidade_dt1:.2f}, Raiz = {math.sqrt(qualidade_dt1):.2f}')
-#
-# print(f'Falso1: \tPontuação = {qualidade_falso1:.2f}, Raiz = {math.sqrt(qualidade_falso1):.2f}')
-#
-# print(f'Media0: \tPontuação = {qualidade_media0:.2f}, Raiz = {math.sqrt(qualidade_media0):.2f}')
-#
-# print(f'Mediana0: \tPontuação = {qualidade_media0:.2f}, Raiz = {math.sqrt(qualidade_media0):.2f}')
+# print(f'lin. SRV0: \tPontuação = {qualidade_svrl1:.2f}, Raiz = {math.sqrt(qualidade_svrl1):.2f}')
+# print(f'SVR0: \t\tPontuação = {qualidade_svr1:.2f}, Raiz = {math.sqrt(qualidade_svr1):.2f}')
+# print(f'DT0: \t\tPontuação = {qualidade_dt1:.2f}, Raiz = {math.sqrt(qualidade_dt1):.2f}')
+# print(f'Media0: \tPontuação = {qualidade_media1:.2f}, Raiz = {math.sqrt(qualidade_media1):.2f}')
+# print(f'Mediana0: \tPontuação = {qualidade_mediana1:.2f}, Raiz = {math.sqrt(qualidade_mediana1):.2f}')
