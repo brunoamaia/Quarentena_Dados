@@ -153,7 +153,7 @@ print(f'Tempo gasto: {time.process_time()- a} s')
 
 print('Modelo - Falso (mediana)')
 a = time.process_time()
-modelo_falso = DummyRegressor(strategy="median")     # Teste utilizando média (falsa IA)
+modelo_falso = DummyRegressor(strategy="median")     # Teste utilizando médiana (falsa IA)
 modelo_falso = modelo_falso.fit(x_treino, y_treino)
 predicoes_falsas = modelo_falso.predict(x_teste)
 qualidade_falso2 = mean_squared_error(y_teste, predicoes_falsas)
