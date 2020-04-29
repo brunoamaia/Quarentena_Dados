@@ -35,8 +35,8 @@ print(f'Dados do Teste: \t{len(dados_teste)}')
 print(f'Dados do Desafio: \t{len(dados_desafio)}')
 
 
-sns.pairplot(dados_treino)
-plot.show()
+# sns.pairplot(dados_treino)
+# plot.show()
 
 coluna_label = 'NU_NOTA_LC'
 coluna_features = ['NU_NOTA_CN', 'NU_NOTA_CH', 'NU_NOTA_MT', 'NU_NOTA_REDACAO']
@@ -51,36 +51,36 @@ y_teste = dados_teste[coluna_label].to_numpy()
 resultados  = {}    # Criar um Dicionário para armazenar a qualidade dos testes
 
 
-print('\nModelo - NuSVR')                     # NuSVR
-a = time.process_time()
-modelo_svr = NuSVR()
-modelo_svr = modelo_svr.fit(x_treino, y_treino)
-predicoes_svr = modelo_svr.predict(x_teste)
-qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
-del modelo_svr, predicoes_svr
-resultados['NuSVR: \t\t']=qualidade_svr0
-print(f'Tempo gasto: {time.process_time()- a} s')
-
-
-print('\nModelo - SVR')                     # SVR - Sigmoid
-a = time.process_time()
-modelo_svr = SVR(kernel='sigmoid')
-modelo_svr = modelo_svr.fit(x_treino, y_treino)
-predicoes_svr = modelo_svr.predict(x_teste)
-qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
-del modelo_svr, predicoes_svr
-resultados['Sigmoid: \t\t']=qualidade_svr0
-print(f'Tempo gasto: {time.process_time()- a} s')
-
-print('\nModelo - SVR')                     # SVR - precomputed
-a = time.process_time()
-modelo_svr = SVR(kernel='precomputed')
-modelo_svr = modelo_svr.fit(x_treino, y_treino)
-predicoes_svr = modelo_svr.predict(x_teste)
-qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
-del modelo_svr, predicoes_svr
-resultados['Precomputed: \t\t']=qualidade_svr0
-print(f'Tempo gasto: {time.process_time()- a} s')
+# print('\nModelo - NuSVR')                     # NuSVR
+# a = time.process_time()
+# modelo_svr = NuSVR()
+# modelo_svr = modelo_svr.fit(x_treino, y_treino)
+# predicoes_svr = modelo_svr.predict(x_teste)
+# qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
+# del modelo_svr, predicoes_svr
+# resultados['NuSVR: \t\t']=qualidade_svr0
+# print(f'Tempo gasto: {time.process_time()- a} s')
+#
+#
+# print('\nModelo - SVR')                     # SVR - Sigmoid
+# a = time.process_time()
+# modelo_svr = SVR(kernel='sigmoid')
+# modelo_svr = modelo_svr.fit(x_treino, y_treino)
+# predicoes_svr = modelo_svr.predict(x_teste)
+# qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
+# del modelo_svr, predicoes_svr
+# resultados['Sigmoid: \t\t']=qualidade_svr0
+# print(f'Tempo gasto: {time.process_time()- a} s')
+#
+# print('\nModelo - SVR')                     # SVR - precomputed
+# a = time.process_time()
+# modelo_svr = SVR(kernel='precomputed')
+# modelo_svr = modelo_svr.fit(x_treino, y_treino)
+# predicoes_svr = modelo_svr.predict(x_teste)
+# qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
+# del modelo_svr, predicoes_svr
+# resultados['Precomputed: \t\t']=qualidade_svr0
+# print(f'Tempo gasto: {time.process_time()- a} s')
 
 print('\nModelo - SVR')                     # SVR - precomputed - poly
 a = time.process_time()
@@ -91,6 +91,21 @@ qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
 del modelo_svr, predicoes_svr
 resultados['Poly: \t\t']=qualidade_svr0
 print(f'Tempo gasto: {time.process_time()- a} s')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # print('\nModelo - Linear SVR')              # Linear SVR
 # a = time.process_time()
@@ -158,8 +173,8 @@ notas = dados_treino[ (dados_treino.NU_NOTA_LC > f) &         # Fazer em Apenas 
 x_treino = notas[coluna_features].to_numpy()
 y_treino = notas[coluna_label].to_numpy()
 
-sns.pairplot(notas)
-plot.show()
+# sns.pairplot(notas)
+# plot.show()
 
 print('\nDados após remover notas abaixo de 100 (supondo que são Outliers')
 print(f'foram removidas {len(dados_treino) - len(notas)} linhas com notas abaixo de 100')
