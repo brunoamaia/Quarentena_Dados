@@ -51,26 +51,26 @@ y_teste = dados_teste[coluna_label].to_numpy()
 resultados  = {}    # Criar um Dicionário para armazenar a qualidade dos testes
 
 
-# print('\nModelo - NuSVR')                     # NuSVR
-# a = time.process_time()
-# modelo_svr = NuSVR()
-# modelo_svr = modelo_svr.fit(x_treino, y_treino)
-# predicoes_svr = modelo_svr.predict(x_teste)
-# qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
-# del modelo_svr, predicoes_svr
-# resultados['NuSVR: \t\t']=qualidade_svr0
-# print(f'Tempo gasto: {time.process_time()- a} s')
-#
-#
-# print('\nModelo - SVR')                     # SVR - Sigmoid
-# a = time.process_time()
-# modelo_svr = SVR(kernel='sigmoid')
-# modelo_svr = modelo_svr.fit(x_treino, y_treino)
-# predicoes_svr = modelo_svr.predict(x_teste)
-# qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
-# del modelo_svr, predicoes_svr
-# resultados['Sigmoid: \t\t']=qualidade_svr0
-# print(f'Tempo gasto: {time.process_time()- a} s')
+print('\nModelo - NuSVR')                     # NuSVR
+a = time.process_time()
+modelo_svr = NuSVR()
+modelo_svr = modelo_svr.fit(x_treino, y_treino)
+predicoes_svr = modelo_svr.predict(x_teste)
+qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
+del modelo_svr, predicoes_svr
+resultados['NuSVR: \t\t']=qualidade_svr0
+print(f'Tempo gasto: {time.process_time()- a} s')
+
+
+print('\nModelo - SVR')                     # SVR - Sigmoid
+a = time.process_time()
+modelo_svr = SVR(kernel='sigmoid')
+modelo_svr = modelo_svr.fit(x_treino, y_treino)
+predicoes_svr = modelo_svr.predict(x_teste)
+qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
+del modelo_svr, predicoes_svr
+resultados['Sigmoid: \t\t']=qualidade_svr0
+print(f'Tempo gasto: {time.process_time()- a} s')
 #
 # print('\nModelo - SVR')                     # SVR - precomputed
 # a = time.process_time()
@@ -82,15 +82,15 @@ resultados  = {}    # Criar um Dicionário para armazenar a qualidade dos testes
 # resultados['Precomputed: \t\t']=qualidade_svr0
 # print(f'Tempo gasto: {time.process_time()- a} s')
 
-print('\nModelo - SVR')                     # SVR - precomputed - poly
-a = time.process_time()
-modelo_svr = SVR(kernel='poly')
-modelo_svr = modelo_svr.fit(x_treino, y_treino)
-predicoes_svr = modelo_svr.predict(x_teste)
-qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
-del modelo_svr, predicoes_svr
-resultados['Poly: \t\t']=qualidade_svr0
-print(f'Tempo gasto: {time.process_time()- a} s')
+# print('\nModelo - SVR')                     # SVR - precomputed - poly
+# a = time.process_time()
+# modelo_svr = SVR(kernel='poly')
+# modelo_svr = modelo_svr.fit(x_treino, y_treino)
+# predicoes_svr = modelo_svr.predict(x_teste)
+# qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
+# del modelo_svr, predicoes_svr
+# resultados['Poly: \t\t']=qualidade_svr0
+# print(f'Tempo gasto: {time.process_time()- a} s')
 
 
 
