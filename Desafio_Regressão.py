@@ -19,6 +19,9 @@ from sklearn.svm import NuSVR                           # Novo método pra testa
 from sklearn.linear_model import BayesianRidge
 from sklearn.linear_model import Lasso
 
+from sklearn.neural_network import MLPRegressor
+
+
 from sklearn.neighbors import KNeighborsRegressor
 
 from sklearn.ensemble import RandomForestRegressor
@@ -47,31 +50,40 @@ print(f'Dados do Teste: \t{len(dados_teste)}')
 print(f'Dados do Desafio: \t{len(dados_desafio)}')
 
 
+
 # sns.pairplot(dados_treino)
 # plot.show()
 
 coluna_label = 'NU_NOTA_LC'
 coluna_features = ['NU_NOTA_CN', 'NU_NOTA_CH', 'NU_NOTA_MT', 'NU_NOTA_REDACAO']
-x_treino = dados_treino[coluna_features].to_numpy()
-y_treino = dados_treino[coluna_label].to_numpy()
+# x_treino = dados_treino[coluna_features].to_numpy()
+# y_treino = dados_treino[coluna_label].to_numpy()
 x_teste = dados_teste[coluna_features].to_numpy()
 y_teste = dados_teste[coluna_label].to_numpy()
+x_desafio = dados_desafio[coluna_features].to_numpy()
 
+dados_todos = dados_treino.append(pd.DataFrame(dados_teste), ignore_index=True)     # Utilizar todos os dados para treinar
+print(f'Dados do Dataframe final: \t{dados_todos.shape}')
+x_treino = dados_todos[coluna_features].to_numpy()
+y_treino = dados_todos[coluna_label].to_numpy()
+print(f'Novo comprimento dos dados de treino: {len(x_treino)}')
 
 
 ################################            Treino da inteligencia              ################################
 resultados  = {}    # Criar um Dicionário para armazenar a qualidade dos testes
 
 
-print('\nModelo - RandomForestRegressor')                     # RandomForestRegressor
-a = time.process_time()
-modelo_svr = RandomForestRegressor()
-modelo_svr = modelo_svr.fit(x_treino, y_treino)
-predicoes_svr = modelo_svr.predict(x_teste)
-qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
-del modelo_svr, predicoes_svr
-resultados['RandomForestRegressor \t\t']=qualidade_svr0
-print(f'Tempo gasto: {time.process_time()- a} s')
+# print('\nModelo - RandomForestRegressor')                     # RandomForestRegressor
+# a = time.process_time()
+# modelo_svr = RandomForestRegressor()
+# modelo_svr = modelo_svr.fit(x_treino, y_treino)
+# predicoes_svr = modelo_svr.predict(x_teste)
+# qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
+# del modelo_svr, predicoes_svr
+# resultados['RandomForestRegressor \t\t']=qualidade_svr0
+# print(f'Tempo gasto: {time.process_time()- a} s')
+
+
 
 # print('\nModelo - KNeighborsRegressor')                     # KNeighborsRegressor
 # a = time.process_time()
@@ -83,6 +95,48 @@ print(f'Tempo gasto: {time.process_time()- a} s')
 # resultados['KNeighborsRegressor \t\t']=qualidade_svr0
 # print(f'Tempo gasto: {time.process_time()- a} s')
 #
+#
+# print('\nModelo - MLPRegressor')                     # MLPRegressor
+# a = time.process_time()
+# modelo_svr = MLPRegressor(alpha=1, max_iter=500)
+# modelo_svr = modelo_svr.fit(x_treino, y_treino)
+# predicoes_svr = modelo_svr.predict(x_teste)
+# qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
+# # del modelo_svr, predicoes_svr
+# resultados['MLP alpha=3: \t\t']=qualidade_svr0
+# print(f'Tempo gasto: {time.process_time()- a} s')
+#
+#
+# print('\nModelo - MLPRegressor')                     # MLPRegressor
+# a = time.process_time()
+# modelo_svr = MLPRegressor(solver='sgd')
+# modelo_svr = modelo_svr.fit(x_treino, y_treino)
+# predicoes_svr = modelo_svr.predict(x_teste)
+# qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
+# del modelo_svr, predicoes_svr
+# resultados['MLP sgd: \t\t']=qualidade_svr0
+# print(f'Tempo gasto: {time.process_time()- a} s')
+#
+# print('\nModelo - MLPRegressor')                     # MLPRegressor
+# a = time.process_time()
+# modelo_svr = MLPRegressor(solver='adam')
+# modelo_svr = modelo_svr.fit(x_treino, y_treino)
+# predicoes_svr = modelo_svr.predict(x_teste)
+# qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
+# del modelo_svr, predicoes_svr
+# resultados['MLP adam: \t\t']=qualidade_svr0
+# print(f'Tempo gasto: {time.process_time()- a} s')
+
+# print('\nModelo - MLPRegressor')                     # MLPRegressor
+# a = time.process_time()
+# modelo_svr = MLPRegressor(activation='relu')
+# modelo_svr = modelo_svr.fit(x_treino, y_treino)
+# predicoes_svr = modelo_svr.predict(x_teste)
+# qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
+# del modelo_svr, predicoes_svr
+# resultados['MLP relu: \t\t']=qualidade_svr0
+# print(f'Tempo gasto: {time.process_time()- a} s')
+
 # print('\nModelo - Lasso')                     # Lasso
 # a = time.process_time()
 # modelo_svr = Lasso(alpha=2.0)
@@ -113,15 +167,15 @@ print(f'Tempo gasto: {time.process_time()- a} s')
 # resultados['MLPRegressor: \t\t']=qualidade_svr0
 # print(f'Tempo gasto: {time.process_time()- a} s')
 #
-# print('\nModelo - NuSVR')                     # NuSVR
-# a = time.process_time()
-# modelo_svr = NuSVR()
-# modelo_svr = modelo_svr.fit(x_treino, y_treino)
-# predicoes_svr = modelo_svr.predict(x_teste)
-# qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
-# del modelo_svr, predicoes_svr
-# resultados['NuSVR: \t\t']=qualidade_svr0
-# print(f'Tempo gasto: {time.process_time()- a} s')
+print('\nModelo - NuSVR')                     # NuSVR
+a = time.process_time()
+modelo_svr = NuSVR()
+modelo_svr = modelo_svr.fit(x_treino, y_treino)
+predicoes_svr = modelo_svr.predict(x_teste)
+qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
+del modelo_svr, predicoes_svr
+resultados['NuSVR: \t\t']=qualidade_svr0
+print(f'Tempo gasto: {time.process_time()- a} s')
 #
 #
 # print('\nModelo - SVR')                     # SVR - Sigmoid
@@ -299,3 +353,11 @@ print(f'Tempo gasto: {time.process_time()- a} s')
 print('\nAvaliação de desempenho (usando todos os dados):')
 for k, v in resultados.items():
     print(f'{k} \tPontuação = {v:.2f}, Raiz = {math.sqrt(v):.2f}')
+
+# ############ Forma de salvar o arquivo no pc ############
+# MODELO = modelo_svr
+# predicao_desafio = MODELO.predict(x_desafio)
+#
+# desafio_df = pd.DataFrame(dados_desafio.ID)
+# desafio_df[coluna_label] = predicao_desafio
+# desafio_df.to_csv('PREDICAO_DESAFIOQT.csv', index=False)
