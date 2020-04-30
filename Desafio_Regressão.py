@@ -33,7 +33,8 @@ from sklearn.neural_network import MLPRegressor         # Multi-layer Perceptron
 # Formatações Gerais
 pd.options.display.float_format = '{:,.2f}'.format  # 2 casas decimais
 sns.set_style("whitegrid")                          # Gráficos com Grid
-np.random.seed(43267)       # Fixa a geração dos termos aleatórios
+# np.random.seed(43267)       # Fixa a geração dos termos aleatórios
+np.random.seed(23456)
 
 # Verificar o tempo gasto
 import time
@@ -96,15 +97,15 @@ resultados  = {}    # Criar um Dicionário para armazenar a qualidade dos testes
 # print(f'Tempo gasto: {time.process_time()- a} s')
 #
 #
-# print('\nModelo - MLPRegressor')                     # MLPRegressor
-# a = time.process_time()
-# modelo_svr = MLPRegressor(alpha=1, max_iter=500)
-# modelo_svr = modelo_svr.fit(x_treino, y_treino)
-# predicoes_svr = modelo_svr.predict(x_teste)
-# qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
-# # del modelo_svr, predicoes_svr
-# resultados['MLP alpha=3: \t\t']=qualidade_svr0
-# print(f'Tempo gasto: {time.process_time()- a} s')
+print('\nModelo - MLPRegressor')                     # MLPRegressor
+a = time.process_time()
+modelo_svr = MLPRegressor(alpha=1, max_iter=500)
+modelo_svr = modelo_svr.fit(x_treino, y_treino)
+predicoes_svr = modelo_svr.predict(x_teste)
+qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
+# del modelo_svr, predicoes_svr
+resultados['MLP alpha=3: \t\t']=qualidade_svr0
+print(f'Tempo gasto: {time.process_time()- a} s')
 #
 #
 # print('\nModelo - MLPRegressor')                     # MLPRegressor
@@ -167,15 +168,15 @@ resultados  = {}    # Criar um Dicionário para armazenar a qualidade dos testes
 # resultados['MLPRegressor: \t\t']=qualidade_svr0
 # print(f'Tempo gasto: {time.process_time()- a} s')
 #
-print('\nModelo - NuSVR')                     # NuSVR
-a = time.process_time()
-modelo_svr = NuSVR()
-modelo_svr = modelo_svr.fit(x_treino, y_treino)
-predicoes_svr = modelo_svr.predict(x_teste)
-qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
-del modelo_svr, predicoes_svr
-resultados['NuSVR: \t\t']=qualidade_svr0
-print(f'Tempo gasto: {time.process_time()- a} s')
+# print('\nModelo - NuSVR')                     # NuSVR
+# a = time.process_time()
+# modelo_svr = NuSVR()
+# modelo_svr = modelo_svr.fit(x_treino, y_treino)
+# predicoes_svr = modelo_svr.predict(x_teste)
+# qualidade_svr0 = mean_squared_error(y_teste, predicoes_svr)
+# del modelo_svr, predicoes_svr
+# resultados['NuSVR: \t\t']=qualidade_svr0
+# print(f'Tempo gasto: {time.process_time()- a} s')
 #
 #
 # print('\nModelo - SVR')                     # SVR - Sigmoid
