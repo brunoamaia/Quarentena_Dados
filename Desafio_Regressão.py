@@ -355,10 +355,10 @@ print('\nAvaliação de desempenho (usando todos os dados):')
 for k, v in resultados.items():
     print(f'{k} \tPontuação = {v:.2f}, Raiz = {math.sqrt(v):.2f}')
 
-# ############ Forma de salvar o arquivo no pc ############
-# MODELO = modelo_svr
-# predicao_desafio = MODELO.predict(x_desafio)
-#
-# desafio_df = pd.DataFrame(dados_desafio.ID)
-# desafio_df[coluna_label] = predicao_desafio
-# desafio_df.to_csv('PREDICAO_DESAFIOQT.csv', index=False)
+############ Forma de salvar o arquivo no pc ############
+MODELO = modelo_svr
+predicao_desafio = MODELO.predict(x_desafio)
+
+desafio_df = pd.DataFrame(dados_desafio.ID)
+desafio_df[coluna_label] = predicao_desafio
+desafio_df.to_csv('PREDICAO_DESAFIOQT.csv', index=False)
